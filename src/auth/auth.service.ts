@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { UserService } from 'src/user/user.service';
+import { DomainUser, UserService } from 'src/user/user.service';
 
 @Injectable()
 export class AuthService {
@@ -8,7 +8,7 @@ export class AuthService {
   async validateUser(
     username: string,
     password: string,
-  ): Promise<{ userId: number; username: string } | null> {
+  ): Promise<DomainUser | null> {
     const user = await this.userService.getWithUserName(username);
     // TODO: add hash
     if (user && user.password === password) {
