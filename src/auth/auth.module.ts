@@ -21,7 +21,7 @@ import { HashModule } from 'src/hash/hash.module';
     // 設定値： https://github.com/auth0/node-jsonwebtoken#usage
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
+      signOptions: { algorithm: 'HS256', expiresIn: '60s' },
     }),
   ],
   providers: [
