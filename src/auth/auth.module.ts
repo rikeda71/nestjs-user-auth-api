@@ -8,6 +8,7 @@ import { jwtConstants } from './constants';
 import { JwtStrategy } from './jwt.strategy';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './jwt-auth.guard';
+import { HashModule } from 'src/hash/hash.module';
 
 @Module({
   // PassportModule, JwtModule を認証認可のために利用
@@ -15,6 +16,7 @@ import { JwtAuthGuard } from './jwt-auth.guard';
   imports: [
     UserModule,
     PassportModule,
+    HashModule,
     // ref. https://github.com/nestjs/jwt/blob/master/README.md
     // 設定値： https://github.com/auth0/node-jsonwebtoken#usage
     JwtModule.register({
