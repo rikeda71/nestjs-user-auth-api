@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
 import { AppService } from './app.service';
-import { AuthGuard } from '@nestjs/passport';
+import { LocalAuthGuardGuard } from './auth/local-auth-guard.guard';
 
 @Controller()
 export class AppController {
@@ -13,7 +13,7 @@ export class AppController {
 
   // 'local' は passport-local strategy のデフォルト名
   // AuthGuard は @nestjs/passport が自動で用意
-  @UseGuards(AuthGuard('local'))
+  @UseGuards(LocalAuthGuardGuard)
   @Post('auth/login')
   async login(@Request() req) {
     // LocalStrategy.validate() から返却された値は Request オブジェクトに付与される
