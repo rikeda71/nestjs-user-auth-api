@@ -1,0 +1,19 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7
+    container_name: user_db
+    volumes:
+      - type: volume
+        source: dbdata
+        target: /var/lib/mysl
+    environment:
+      - MYSQL_DATABASE=user_db
+      - MYSQL_USER=user
+      - MYSQL_ROOT_PASSWORD=pass
+      - MYSQL_PASSWORD=pass
+    ports:
+      - 3306:3306
+
+volumes:
+  dbdata:
