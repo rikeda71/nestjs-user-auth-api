@@ -10,6 +10,7 @@ export class AuthService {
     password: string,
   ): Promise<DomainUser | null> {
     const user = await this.userService.getWithUserName(username);
+    console.log(user);
     // TODO: add hash
     if (user && user.password === password) {
       const { password, ...result } = user;
