@@ -22,6 +22,11 @@ export class UserService {
   }
 
   async createUser(username: string, password: string): Promise<User> {
+    // 作成済みの場合は作らない
+    const existUser = await this.getWithUserName(username);
+    if (existUser) {
+      return existUser;
+    }
     const user = await this.prismaService.user.create({
       data: {
         username: username,
