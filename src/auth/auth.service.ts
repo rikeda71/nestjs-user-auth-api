@@ -1,9 +1,17 @@
 import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { DomainUser, UserService } from 'src/user/user.service';
+
+export interface AccessToken {
+  accessToken: string;
+}
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   async validateUser(
     username: string,
@@ -18,5 +26,16 @@ export class AuthService {
     }
 
     return null;
+  }
+
+  login(user: DomainUser): AccessToken {
+    const payload = { username: user.username, sub: user.userId };
+    // jwtService.sign はアクセストークンを文字列で返す
+    // JWT の標準に合わせるため、userId の値を保持するプロパティ sub を選択
+    // sub は unique である必要があるため、id を利用
+    const accessToken = this.jwtService.sign(payload);
+    return {
+      accessToken,
+    };
   }
 }
