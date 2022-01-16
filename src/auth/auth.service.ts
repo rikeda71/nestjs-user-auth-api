@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { HashService } from 'src/hash/hash.service';
 import { DomainUser, UserService } from 'src/user/user.service';
 
 export interface AccessToken {
@@ -11,6 +12,7 @@ export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
+    private readonly hashService: HashService,
   ) {}
 
   async validateUser(
@@ -20,7 +22,7 @@ export class AuthService {
     const user = await this.userService.getWithUserName(username);
     console.log(user);
     // TODO: add hash
-    if (user && user.password === password) {
+    if (user && this.hashService.compare(password, user.password)) {
       const { password, ...result } = user;
       return result;
     }
