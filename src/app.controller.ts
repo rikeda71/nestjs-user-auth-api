@@ -3,6 +3,7 @@ import { AppService } from './app.service';
 import { AuthService } from './auth/auth.service';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { LocalAuthGuardGuard } from './auth/local-auth-guard.guard';
+import { PublicApi } from './auth/public-api.decorator';
 
 @Controller()
 export class AppController {
@@ -16,8 +17,8 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  // 'local' は passport-local strategy のデフォルト名
-  // AuthGuard は @nestjs/passport が自動で用意
+  // 認証用のエンドポイントは公開
+  @PublicApi()
   @UseGuards(LocalAuthGuardGuard)
   @Post('auth/login')
   async login(@Request() req) {
@@ -26,7 +27,6 @@ export class AppController {
     return this.authService.login(req.user);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('profile')
   getProfile(@Request() req) {
     // JwtStrategy.validate() 内に認証情報が含まれているのでそれを返している

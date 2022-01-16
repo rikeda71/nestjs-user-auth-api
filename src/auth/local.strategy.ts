@@ -9,7 +9,12 @@ import { AuthService } from './auth.service';
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
   constructor(private readonly authService: AuthService) {
-    super();
+    super({
+      // username, password のフィールド名を変更したい時
+      // 例えばメールアドレス認証だと以下のようにすれば良い
+      // usernameField: 'email',
+      // passwordField: 'password',
+    });
   }
 
   async validate(username: string, password: string): Promise<DomainUser> {

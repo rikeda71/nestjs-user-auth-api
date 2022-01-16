@@ -8,6 +8,8 @@ import { jwtConstants } from './constants';
 @Injectable()
 // Strategy は passport-jwt のものであることに注意
 // 各ライブラリごとに 'Strategy' というクラス名で提供されている
+// ストラテジ名を明示的にしたい場合は以下のようにすると良い
+// export class JwtStrategy extends PassportStrategy(Strategy, 'myjwt') {
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor() {
     // ref. https://github.com/mikenicholson/passport-jwt#configure-strategy
